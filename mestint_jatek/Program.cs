@@ -62,8 +62,9 @@ namespace mestint_jatek
             bool result = false;
             for (int i = generated.Length; i >= generated.Length-position; i--)
             {
-                if (position <= generated.Length && ((generated.Length + 1) - position)==0 && i== ((generated.Length + 1) - position))
+                if (position <= generated.Length && (int)Char.GetNumericValue(generated[generated.Length  - position])==0 && i==(generated.Length- position))
                 {
+                    int test = (int)Char.GetNumericValue(generated[i]);
                     result = true;
                     break;
                 }
@@ -82,12 +83,12 @@ namespace mestint_jatek
         static void Main(string[] args)
         {
             string test = Numbergenerator();
-            string test2 = "5231205661024";
+            string test2 = "5230205661024";
 
             Console.WriteLine(test);
             Console.WriteLine(test.Length);
             Console.WriteLine(Checkerone(test2,6));
-            Console.WriteLine(Chekertwo(test2,3));
+            Console.WriteLine(Chekertwo(test2,10));
             Console.ReadLine();
         }
 
