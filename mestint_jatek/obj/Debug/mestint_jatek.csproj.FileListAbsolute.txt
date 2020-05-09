@@ -1,0 +1,6 @@
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\bin\Debug\mestint_jatek.exe.config
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\bin\Debug\mestint_jatek.exe
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\bin\Debug\mestint_jatek.pdb
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\obj\Debug\mestint_jatek.csprojResolveAssemblyReference.cache
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\obj\Debug\mestint_jatek.exe
+c:\users\tamas\documents\visual studio 2015\Projects\mestint_jatek\mestint_jatek\obj\Debug\mestint_jatek.pdb
