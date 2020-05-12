@@ -74,21 +74,33 @@ namespace mestint_jatek
                 }
 
             }
-
-
             return result;
 
+        }
+
+        static public string Decrese(string generated,int position)
+        {
+  
+            string newone = generated;
+            char[] ch = newone.ToCharArray();
+            int number = ((int)char.GetNumericValue(newone[position - 1]) - 1)+'0';
+            char replaceble = Convert.ToChar(number);
+            ch[position - 1] = replaceble;
+            newone = new string(ch);
+            
+             return newone;
         }
 
         static void Main(string[] args)
         {
             string test = Numbergenerator();
-            string test2 = "5230205661024";
+            string test2 = "5231205661024";
 
             Console.WriteLine(test);
             Console.WriteLine(test.Length);
             Console.WriteLine(Checkerone(test2,6));
             Console.WriteLine(Chekertwo(test2,10));
+            Console.WriteLine(Decrese(test2,3));
             Console.ReadLine();
         }
 
