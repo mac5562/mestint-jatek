@@ -60,9 +60,10 @@ namespace mestint_jatek
         static public bool Chekertwo(string generated,int position)
         {
             bool result = false;
-            for (int i = generated.Length; i >= generated.Length-position; i--)
+            for (int i = generated.Length-1; i >= generated.Length-position; i--)
             {
-                if (position <= generated.Length && (int)Char.GetNumericValue(generated[generated.Length  - position])==0 && i==(generated.Length- position))
+              
+                if (position <= generated.Length && (int)Char.GetNumericValue(generated[generated.Length  - position])==0 && i== generated.Length - position)
                 {
                     int test = (int)Char.GetNumericValue(generated[i]);
                     result = true;
@@ -90,6 +91,13 @@ namespace mestint_jatek
             
              return newone;
         }
+        static public string Removeing(string generated,int position)
+        {
+            string newone=null;
+            newone = generated.Remove(position-1);
+
+            return newone;
+        }
 
         static void Main(string[] args)
         {
@@ -98,9 +106,10 @@ namespace mestint_jatek
 
             Console.WriteLine(test);
             Console.WriteLine(test.Length);
-            Console.WriteLine(Checkerone(test2,6));
-            Console.WriteLine(Chekertwo(test2,10));
+            Console.WriteLine(Checkerone(test2,4));
+            Console.WriteLine(Chekertwo(test2,3));
             Console.WriteLine(Decrese(test2,3));
+            Console.WriteLine(Removeing(test2,6));
             Console.ReadLine();
         }
 
