@@ -98,18 +98,95 @@ namespace mestint_jatek
 
             return newone;
         }
+        static public void Gameover(int id)
+        {
+            if (id==1)
+            {
+                Console.WriteLine("Játék vége !!! a játékos vesztett");
+            }
+            else
+            {
+                Console.WriteLine("Játék vége !!! az Ai vesztett");
+            }
+            
+        }
 
         static void Main(string[] args)
         {
             string test = Numbergenerator();
             string test2 = "5231205661024";
+            int playerid = 1;
+            int aiid = 2;
+            int lastid;
+            int movechoice;
+            int position;
+            Random airnd = new Random();
+            bool gamerunning = true;
+            string result=test2;
 
-            Console.WriteLine(test);
-            Console.WriteLine(test.Length);
-            Console.WriteLine(Checkerone(test2,4));
-            Console.WriteLine(Chekertwo(test2,3));
-            Console.WriteLine(Decrese(test2,3));
-            Console.WriteLine(Removeing(test2,6));
+            while (gamerunning)
+            {
+                Console.WriteLine(result);
+                Console.WriteLine("Melyik lépést választja?");
+                movechoice = int.Parse(Console.ReadLine());
+                switch (movechoice)
+                {
+                    case 0:
+                        Console.WriteLine("Adja meg a csökkenteni kivánt szám helyzetétt");
+                        position = int.Parse(Console.ReadLine());
+                        if (Checkerone(result,position)==true)
+                        {
+                            result = Decrese(result, position);
+                            lastid = playerid;
+                            if (!result.Contains('0') || !result.Contains('1'))
+                            {
+                                gamerunning = false;
+                                Gameover(lastid);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("A megadott pozíció érvénytelen");
+                            break;
+                        }
+                        break;
+                    case 1:
+                        Console.WriteLine("Adja meg a eltávolítani kivánt kivánt karakterlánc kezdő nullájának helyzetétt");
+                        position = int.Parse(Console.ReadLine());
+                        if (Chekertwo(result,position)==true)
+                        {
+                            result = Removeing(result, position);
+                            lastid = playerid;
+                            if (!result.Contains('0') && !result.Contains('1'))
+                            {
+                                gamerunning = false;
+                                Gameover(lastid);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("A megadott pozíció érvénytelen");
+                            break;
+                        }
+
+                        break;
+                }
+
+
+            }
+
+
+            //Console.WriteLine(test);
+            //Console.WriteLine(test.Length);
+            //Console.WriteLine(Checkerone(test2,4));
+            //Console.WriteLine(Chekertwo(test2,3));
+            //Console.WriteLine(Decrese(test2,3));
+            //Console.WriteLine(Removeing(test2,6));
+
+
+
             Console.ReadLine();
         }
 
