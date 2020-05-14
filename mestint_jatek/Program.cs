@@ -94,7 +94,7 @@ namespace mestint_jatek
         static public string Removeing(string generated,int position)
         {
             string newone=null;
-            newone = generated.Remove(position-1);
+            newone = generated.Remove(generated.Length - position);
 
             return newone;
         }
@@ -110,6 +110,56 @@ namespace mestint_jatek
             }
             
         }
+        static public int Aimovechoice(string generated)
+        {
+            int choice=0;
+            for (int i = 0; i < generated.Length; i++)
+            {
+                if (generated[i] == '0')
+                {
+                    choice = 1;
+                    break;
+                }
+                else if(generated[i]=='1')
+                {
+                    choice = 0;
+                    break;
+                }
+
+            }
+
+
+            return choice;
+        }
+
+        static public int Aipositionchoice(string generated,int aichoice)
+        {
+            int choice=0;
+            if (aichoice == 1)
+            {
+                for (int i = generated.Length - 1; i >= 0; i--)
+                {
+                    if (generated[i]=='0')
+                    {
+                        choice =generated.Length-i;
+                        break;
+
+                    }
+                }
+            }
+            else if (aichoice == 0)
+            {
+                for (int i = 0; i < generated.Length; i++)
+                {
+                    if (generated[i] == '1'||generated[i]=='2')
+                    {
+                        choice = i+1;
+                        break;
+                    }
+                }
+            }
+            return choice;
+        }
 
         static void Main(string[] args)
         {
@@ -118,7 +168,8 @@ namespace mestint_jatek
             int playerid = 1;
             int aiid = 2;
             int lastid;
-            int movechoice;
+            int playermovechoice;
+            int aimovechoice;
             int position;
             Random airnd = new Random();
             bool gamerunning = true;
@@ -126,22 +177,24 @@ namespace mestint_jatek
 
             while (gamerunning)
             {
-                Console.WriteLine(result);
+                Console.WriteLine("Jelenlegi érték: "+result);
                 Console.WriteLine("Melyik lépést választja?");
-                movechoice = int.Parse(Console.ReadLine());
-                switch (movechoice)
+                playermovechoice = int.Parse(Console.ReadLine());
+                switch (playermovechoice)
                 {
                     case 0:
                         Console.WriteLine("Adja meg a csökkenteni kivánt szám helyzetétt");
                         position = int.Parse(Console.ReadLine());
-                        if (Checkerone(result,position)==true)
+                        if (Checkerone(result, position) == true)
                         {
                             result = Decrese(result, position);
+                            Console.WriteLine("Müvelet után: "+result);
                             lastid = playerid;
                             if (!result.Contains('0') || !result.Contains('1'))
                             {
                                 gamerunning = false;
                                 Gameover(lastid);
+                                Console.WriteLine("Végső érték: "+result);
                                 break;
                             }
                         }
@@ -152,16 +205,18 @@ namespace mestint_jatek
                         }
                         break;
                     case 1:
-                        Console.WriteLine("Adja meg a eltávolítani kivánt kivánt karakterlánc kezdő nullájának helyzetétt");
+                        Console.WriteLine("Adja meg a eltávolítani kivánt kivánt karakterlánc kezdő nullájának helyzetétt visszafelé");
                         position = int.Parse(Console.ReadLine());
-                        if (Chekertwo(result,position)==true)
+                        if (Chekertwo(result, position) == true)
                         {
                             result = Removeing(result, position);
-                            lastid = playerid;
+                            Console.WriteLine("Müvelet után: " + result);
+                            lastid = aiid;
                             if (!result.Contains('0') && !result.Contains('1'))
                             {
                                 gamerunning = false;
                                 Gameover(lastid);
+                                Console.WriteLine("Végső érték: " + result);
                                 break;
                             }
                         }
@@ -174,6 +229,56 @@ namespace mestint_jatek
                         break;
                 }
 
+                Console.WriteLine("AI lépése");
+                aimovechoice = Aimovechoice(result);
+                switch (aimovechoice)
+                {
+                    case 0:
+                        Console.WriteLine("Ai csökkenti az általa gondolt számot 1-el");
+                        position =Aipositionchoice(result,aimovechoice);
+                        if (Checkerone(result, position) == true)
+                        {
+                            result = Decrese(result, position);
+                            Console.WriteLine("Müvelet után: " + result);
+                            lastid = aiid;
+                            if (!result.Contains('0') || !result.Contains('1'))
+                            {
+                                gamerunning = false;                             
+                                Gameover(lastid);
+                                Console.WriteLine("Végső érték: " + result);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("A megadott pozíció érvénytelen");
+                            break;
+                        }
+                        break;
+
+                    case 1:
+                        Console.WriteLine("Az Ai kiválasztja törölni kivánt karakterlánc kezdő 0-jának pozícióját");
+                        position = Aipositionchoice(result, aimovechoice);
+                        if (Chekertwo(result, position) == true)
+                        {
+                            result = Removeing(result, position);
+                            Console.WriteLine("Müvelet után: " + result);
+                            lastid = aiid;
+                            if (!result.Contains('0') && !result.Contains('1'))
+                            {
+                                gamerunning = false;
+                                Gameover(lastid);
+                                Console.WriteLine("Végső érték: " + result);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("A megadott pozíció érvénytelen");
+                            break;
+                        }
+                        break;
+                }
 
             }
 
@@ -181,9 +286,10 @@ namespace mestint_jatek
             //Console.WriteLine(test);
             //Console.WriteLine(test.Length);
             //Console.WriteLine(Checkerone(test2,4));
+            //Console.WriteLine(test2);
             //Console.WriteLine(Chekertwo(test2,3));
             //Console.WriteLine(Decrese(test2,3));
-            //Console.WriteLine(Removeing(test2,6));
+            //Console.WriteLine(Removeing(test2,3));
 
 
 
