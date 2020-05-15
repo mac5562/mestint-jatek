@@ -117,12 +117,12 @@ namespace mestint_jatek
             {
                 if (generated[i] == '0')
                 {
-                    choice = 1;
+                    choice = 0;
                     break;
                 }
                 else if(generated[i]=='1')
                 {
-                    choice = 0;
+                    choice = 1;
                     break;
                 }
 
@@ -135,7 +135,7 @@ namespace mestint_jatek
         static public int Aipositionchoice(string generated,int aichoice)
         {
             int choice=0;
-            if (aichoice == 1)
+            if (aichoice == 0)
             {
                 for (int i = generated.Length - 1; i >= 0; i--)
                 {
@@ -147,7 +147,7 @@ namespace mestint_jatek
                     }
                 }
             }
-            else if (aichoice == 0)
+            else if (aichoice == 1)
             {
                 for (int i = 0; i < generated.Length; i++)
                 {
@@ -163,7 +163,7 @@ namespace mestint_jatek
 
         static void Main(string[] args)
         {
-            string test = Numbergenerator();
+            string generated = Numbergenerator();
             string test2 = "5231205661024";
             int playerid = 1;
             int aiid = 2;
@@ -171,10 +171,11 @@ namespace mestint_jatek
             int playermovechoice;
             int aimovechoice;
             int position;
-            Random airnd = new Random();
             bool gamerunning = true;
-            string result=test2;
-
+            string result=generated;
+            Console.WriteLine("Adott egy tetszőleges hosszú, 0, 1, . . . , 9 számjegyekből álló szám (vezetőnullák lehetnek az elején).\n A játékosok felváltva következnek lépni.Egylépésben az alábbi két lépés közül választhatnak: ");
+            Console.WriteLine(" 1: egy 0-nál nagyobb számjegy értékét eggyel csökkentik, \n 0: letörölnek a szám végéről egy 0-val kezdődő, legalább 1 hosszú számjegysorozatot");
+            Console.WriteLine("Az a játékos veszít aki utoljára tud lépni");
             while (gamerunning)
             {
                 Console.WriteLine("Jelenlegi érték: "+result);
@@ -182,7 +183,7 @@ namespace mestint_jatek
                 playermovechoice = int.Parse(Console.ReadLine());
                 switch (playermovechoice)
                 {
-                    case 0:
+                    case 1:
                         Console.WriteLine("Adja meg a csökkenteni kivánt szám helyzetétt");
                         position = int.Parse(Console.ReadLine());
                         if (Checkerone(result, position) == true)
@@ -204,8 +205,8 @@ namespace mestint_jatek
                             break;
                         }
                         break;
-                    case 1:
-                        Console.WriteLine("Adja meg a eltávolítani kivánt kivánt karakterlánc kezdő nullájának helyzetétt visszafelé");
+                    case 0:
+                        Console.WriteLine("Adja meg a eltávolítani kivánt kivánt karakterlánc kezdő nullájának helyzetétt hátulról nézve");
                         position = int.Parse(Console.ReadLine());
                         if (Chekertwo(result, position) == true)
                         {
@@ -233,7 +234,7 @@ namespace mestint_jatek
                 aimovechoice = Aimovechoice(result);
                 switch (aimovechoice)
                 {
-                    case 0:
+                    case 1:
                         Console.WriteLine("Ai csökkenti az általa gondolt számot 1-el");
                         position =Aipositionchoice(result,aimovechoice);
                         if (Checkerone(result, position) == true)
@@ -256,7 +257,7 @@ namespace mestint_jatek
                         }
                         break;
 
-                    case 1:
+                    case 0:
                         Console.WriteLine("Az Ai kiválasztja törölni kivánt karakterlánc kezdő 0-jának pozícióját");
                         position = Aipositionchoice(result, aimovechoice);
                         if (Chekertwo(result, position) == true)
