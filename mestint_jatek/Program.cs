@@ -8,7 +8,7 @@ namespace mestint_jatek
 {
     class Program
     {
-        static public string Numbergenerator()
+        static public string Numbergenerator() //a függvény generál egy szám sorozatott ami nagy valószínüséggel tartalmaz 0-át
         {
             string generated = null;
             int number;
@@ -37,9 +37,9 @@ namespace mestint_jatek
             return generated;
         }
 
-        static public bool Checkerone(string generated,int number)
+        static public bool Checkerone(string generated, int number) //Ellenörzi, hogy a megadott pozíción lévő szám nem nulla illetve a szám nem nagyobb mint a számsorozat hossza
         {
-            bool result=false;
+            bool result = false;
             for (int i = 0; i < generated.Length; i++)
             {
                 if (number <= generated.Length + 1 && i == number - 1 && (int)Char.GetNumericValue(generated[i]) != 0)
@@ -57,13 +57,13 @@ namespace mestint_jatek
             return result;
 
         }
-        static public bool Chekertwo(string generated,int position)
+        static public bool Chekertwo(string generated, int position) //Ellenörzi, hogy a hátulról megadott pozíción 0-e található, illetve, hogy a megadott szám nem nagyobb mint a számsorozat hossza
         {
             bool result = false;
-            for (int i = generated.Length-1; i >= generated.Length-position; i--)
+            for (int i = generated.Length - 1; i >= generated.Length - position; i--)
             {
-              
-                if (position <= generated.Length && (int)Char.GetNumericValue(generated[generated.Length  - position])==0 && i== generated.Length - position)
+
+                if (position <= generated.Length && (int)Char.GetNumericValue(generated[generated.Length - position]) == 0 && i == generated.Length - position)
                 {
                     int test = (int)Char.GetNumericValue(generated[i]);
                     result = true;
@@ -79,28 +79,28 @@ namespace mestint_jatek
 
         }
 
-        static public string Decrese(string generated,int position)
+        static public string Decrese(string generated, int position)//Ellenörzés után csökkenti a megadott pozíción lévő számott 1-el 
         {
-  
+
             string newone = generated;
             char[] ch = newone.ToCharArray();
-            int number = ((int)char.GetNumericValue(newone[position - 1]) - 1)+'0';
+            int number = ((int)char.GetNumericValue(newone[position - 1]) - 1) + '0';
             char replaceble = Convert.ToChar(number);
             ch[position - 1] = replaceble;
             newone = new string(ch);
-            
-             return newone;
+
+            return newone;
         }
-        static public string Removeing(string generated,int position)
+        static public string Removeing(string generated, int position)//Ellenörzés után eltávolítja a megadott pozíción lévő nullával kezdödő sorozatott
         {
-            string newone=null;
+            string newone = null;
             newone = generated.Remove(generated.Length - position);
 
             return newone;
         }
-        static public void Gameover(int id)
+        static public void Gameover(int id)//Kapott id alapján kiírja a vesztest
         {
-            if (id==1)
+            if (id == 1)
             {
                 Console.WriteLine("Játék vége !!! a játékos vesztett");
             }
@@ -108,11 +108,11 @@ namespace mestint_jatek
             {
                 Console.WriteLine("Játék vége !!! az Ai vesztett");
             }
-            
+
         }
-        static public int Aimovechoice(string generated)
+        static public int Aimovechoice(string generated)//Visszaadja, hogy mi legyen a Ai választása
         {
-            int choice=0;
+            int choice = 0;
             for (int i = 0; i < generated.Length; i++)
             {
                 if (generated[i] == '0')
@@ -120,7 +120,7 @@ namespace mestint_jatek
                     choice = 0;
                     break;
                 }
-                else if(generated[i]=='1')
+                else if (generated[i] == '1')
                 {
                     choice = 1;
                     break;
@@ -132,16 +132,16 @@ namespace mestint_jatek
             return choice;
         }
 
-        static public int Aipositionchoice(string generated,int aichoice)
+        static public int Aipositionchoice(string generated, int aichoice) // Miután megvan melyik pozíciót választja a gép, a függvény visszaad egy érvényes pozíciót
         {
-            int choice=0;
+            int choice = 0;
             if (aichoice == 0)
             {
                 for (int i = generated.Length - 1; i >= 0; i--)
                 {
-                    if (generated[i]=='0')
+                    if (generated[i] == '0')
                     {
-                        choice =generated.Length-i;
+                        choice = generated.Length - i;
                         break;
 
                     }
@@ -151,9 +151,9 @@ namespace mestint_jatek
             {
                 for (int i = 0; i < generated.Length; i++)
                 {
-                    if (generated[i] == '1'||generated[i]=='2')
+                    if (generated[i] == '1' || generated[i] == '2')
                     {
-                        choice = i+1;
+                        choice = i + 1;
                         break;
                     }
                 }
@@ -172,15 +172,17 @@ namespace mestint_jatek
             int aimovechoice;
             int position;
             bool gamerunning = true;
-            string result=generated;
+            string result = generated;
             Console.WriteLine("Adott egy tetszőleges hosszú, 0, 1, . . . , 9 számjegyekből álló szám (vezetőnullák lehetnek az elején).\n A játékosok felváltva következnek lépni.Egylépésben az alábbi két lépés közül választhatnak: ");
             Console.WriteLine(" 1: egy 0-nál nagyobb számjegy értékét eggyel csökkentik, \n 0: letörölnek a szám végéről egy 0-val kezdődő, legalább 1 hosszú számjegysorozatot");
             Console.WriteLine("Az a játékos veszít aki utoljára tud lépni");
-            while (gamerunning)
+            while (gamerunning) //játék loop
             {
-                Console.WriteLine("Jelenlegi érték: "+result);
+                Console.WriteLine("Jelenlegi érték: " + result);// A játékos kezd
                 Console.WriteLine("Melyik lépést választja?");
+
                 playermovechoice = int.Parse(Console.ReadLine());
+
                 switch (playermovechoice)
                 {
                     case 1:
@@ -189,13 +191,13 @@ namespace mestint_jatek
                         if (Checkerone(result, position) == true)
                         {
                             result = Decrese(result, position);
-                            Console.WriteLine("Müvelet után: "+result);
+                            Console.WriteLine("Müvelet után: " + result);
                             lastid = playerid;
-                            if (!result.Contains('0') || !result.Contains('1'))
+                            if (!result.Contains('0') || !result.Contains('1'))//Ha már a számsorozat nem tartalmaz 1-et vagy 0-át akkor a játéknak vége
                             {
                                 gamerunning = false;
                                 Gameover(lastid);
-                                Console.WriteLine("Végső érték: "+result);
+                                Console.WriteLine("Végső érték: " + result);
                                 break;
                             }
                         }
@@ -212,13 +214,13 @@ namespace mestint_jatek
                         {
                             result = Removeing(result, position);
                             Console.WriteLine("Müvelet után: " + result);
-                            lastid = aiid;
+                            lastid = playerid;
                             if (!result.Contains('0') && !result.Contains('1'))
                             {
                                 gamerunning = false;
                                 Gameover(lastid);
                                 Console.WriteLine("Végső érték: " + result);
-                                break;
+                                goto Finish;
                             }
                         }
                         else
@@ -228,7 +230,12 @@ namespace mestint_jatek
                         }
 
                         break;
+                    default:
+                        Console.WriteLine("Csak 1-et vagy 0-át adhat meg !!!");
+                        break;
                 }
+
+
 
                 Console.WriteLine("AI lépése");
                 aimovechoice = Aimovechoice(result);
@@ -236,7 +243,7 @@ namespace mestint_jatek
                 {
                     case 1:
                         Console.WriteLine("Ai csökkenti az általa gondolt számot 1-el");
-                        position =Aipositionchoice(result,aimovechoice);
+                        position = Aipositionchoice(result, aimovechoice);
                         if (Checkerone(result, position) == true)
                         {
                             result = Decrese(result, position);
@@ -244,7 +251,7 @@ namespace mestint_jatek
                             lastid = aiid;
                             if (!result.Contains('0') || !result.Contains('1'))
                             {
-                                gamerunning = false;                             
+                                gamerunning = false;
                                 Gameover(lastid);
                                 Console.WriteLine("Végső érték: " + result);
                                 break;
@@ -279,9 +286,12 @@ namespace mestint_jatek
                             break;
                         }
                         break;
+
                 }
 
+
             }
+
 
 
             //Console.WriteLine(test);
@@ -293,12 +303,15 @@ namespace mestint_jatek
             //Console.WriteLine(Removeing(test2,3));
 
 
-
+Finish:
             Console.ReadLine();
         }
 
 
 
-    
+
     }
 }
+
+
+
